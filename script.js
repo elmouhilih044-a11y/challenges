@@ -1,35 +1,51 @@
-import { employees } from "./data.js"
-const container=document.getElementById("employee-form")
-const form=document.getElementById("form-fields")
-const btnSkills=document.getElementById("add-skill-btn")
-const containerSkills=document.getElementById("skills-container")
 
-btnSkills.addEventListener('click',()=>{
-    const div=document.createElement("div")
-    containerSkills.appendChild(div)
-    const input=document.createElement("input")
-    div.appendChild(input)
-    const btnDelete=document.createElement("button")
-    btnDelete.textContent="X"
-    div.appendChild(btnDelete)
-
-    btnDelete.addEventListener('click',()=>{
-        div.remove()
-    })
-})
-
-container.addEventListener('submit',(e)=>{
-    e.preventDefault();
-    const fields=document.querySelectorAll('input[required],select[required]')
-    for (let field of fields) {
-        if (field.value.trim() === "") {
-         
-            field.style.border = "2px solid red";
-            return;                    
-        } else {
-            field.style.border = "1px solid green";
+btn.addEventListener('click',(e)=>{
+    e.preventDefault()
+    const email=document.querySelector(".email").value.trim()
+    
+    function validerEmail() {
+        
+        const regex=/^[\w.-\s]+@[\w.-]+\.\w{2,}$/
+        if(email===""){
+            alert("le champ email est vide")
+        }
+        else if(!regex.test(email)){
+            alert("entrez format correct d'email")
+        }
+        else{
+            alert("email valide")
         }
     }
+    const name=document.querySelector(".name").value.trim()
+    function validerNom() {
+        const regex=/^[A-Za-z\s]+$/
+        if(name===""){
+            alert("le champ name est vide")
+        }
+        else if(!regex.test(name)){
+            alert("entrez format correct de nom")
+        }
+        else{
+            alert("nom valide")
+        }
+    }
+    const tele=document.querySelector(".telephone").value.trim()
+    function validerTelephone() {
+     const regex=/^\+33\d{9}$/
+        if(tele===""){
+            alert("le champ telephone est vide")
+        }
+        else if(!regex.test(tele)){
+            alert("entrez format correct de num telephone")
+        }
+        else{
+            alert("num telephone valide")
+        }
+}
 
 
+    validerEmail()
+    validerNom()
+    validerTelephone()
 })
+
