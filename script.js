@@ -1,41 +1,35 @@
 import { employees } from "./data.js"
-const table =document.getElementById("employees-table");
-const container=document.getElementById("employees-container");
-const list=document.getElementById("employees-tbody");
+const container=document.getElementById("employee-form")
+const form=document.getElementById("form-fields")
+const btnSkills=document.getElementById("add-skill-btn")
+const containerSkills=document.getElementById("skills-container")
 
+btnSkills.addEventListener('click',()=>{
+    const div=document.createElement("div")
+    containerSkills.appendChild(div)
+    const input=document.createElement("input")
+    div.appendChild(input)
+    const btnDelete=document.createElement("button")
+    btnDelete.textContent="X"
+    div.appendChild(btnDelete)
 
-// button
-const btn=document.createElement("button");
-btn.textContent="afficher"
+    btnDelete.addEventListener('click',()=>{
+        div.remove()
+    })
+})
 
-container.appendChild(btn)
-container.insertBefore(btn,container.firstChild)
- btn.addEventListener('click', () => {
-    if (table.style.display === "none") {
-        table.style.display = "table"; 
-        btn.textContent="masquer"
-    } else {
-        table.style.display = "none"; 
-        btn.textContent="afficher"
+container.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    const fields=document.querySelectorAll('input[required],select[required]')
+    for (let field of fields) {
+        if (field.value.trim() === "") {
+         
+            field.style.border = "2px solid red";
+            return;                    
+        } else {
+            field.style.border = "1px solid green";
+        }
     }
-});
 
 
-function afficherEmployes(employees){
-    for(let employee of employees ){
-    const row=document.createElement("tr")
-    row.innerHTML=`
-    <td>${employee.firstName}</td>
-<td>${employee.lastName}</td>
-<td>${employee.department}</td>
-<td>${employee.position}</td>
-<td>${employee.salary}</td>
-<td>${employee.skills}</td>
-`
-list.appendChild(row)
-}
-} 
-
-console.log(afficherEmployes(employees))
-
-
+})
