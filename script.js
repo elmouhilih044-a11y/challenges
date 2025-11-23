@@ -1,52 +1,58 @@
 import { employees } from "./data.js"
 
-// function 1
-function getEmployeesByDepartment(department) {
-   const Result=employees.filter(employee=>employee.department===department)
-    console.log(Result)
+const company = {
+    employees: employees, // le tableau existant
+    projects: {
+        "Project Alpha": [],
+        "Project Beta": [],
+        "Project Gamma": [],
+        "Project Delta": [],
+        "Project Epsilon": []
+    },
 }
-getEmployeesByDepartment("Marketing") 
+
+// function 1
+function assignEmployeeToProject(employeeId, projectName) {
+    const x = employees.find(employee => employee.id === employeeId)
+    if (!x) {
+        console.log("id n'est pas trouvé")
+        return;
+    }
+    company.projects[projectName].push(x)
+}
+assignEmployeeToProject(1, "Project Alpha");
+console.log(company.projects["Project Alpha"]);
 
 // function 2
-function augmenterSalaires(pourcentage) {
-   const Result=employees.map(employee=>employee.salary+(pourcentage*employee.salary)/100)
-   console.log(Result)
-    // Augmente tous les salaires du pourcentage donné
-    // Retourne le nouveau tableau
+function getProjectTeam(projectName) {
+    // Retourner tous les employés d'un projet
+    const result = company.projects[projectName];
+    if (!result) {
+        alert("il n'a aucun employee")
+        return [];
+    }
+    return result;
 }
-augmenterSalaires(20)
+console.log(getProjectTeam("Project Alpha"))
+console.log(getProjectTeam("Project Epsilon"))
 
 // function 3
-function getDepartmentStats() {
-    let count=0;
-    let som=0;
-    for(let employee of employees){
-        count++
-    }
-    for(let employee of employees){
-       som=som+employee.salary;
-    }
-    const salaryMoyen=som/count
- let max=employees[0].salary
-  for(let employee of employees){
-  if(employee.salary>max){
-    max=employee.salary
-  }
+// Retourner tous les projets d'un employé
 
+function getEmployeeProjects(employeeId) {
+    const employee = company.employees.find(emp => emp.id === employeeId);
+    if (!employee) {
+        alert("id non trouvé");
+        return [];
     }
-    // Retourne un objet avec pour chaque département :
-    // - nombre d'employés
-    // - salaire moyen
-    // - salaire maximum
-    console.log(count)
-    console.log(salaryMoyen)
-    console.log(max)
+    return employee.projects;
 }
+console.log(getEmployeeProjects(1));
 
-getDepartmentStats() 
 
 // function 4
-function getEmployeesWithSkill(skill){
-   return employees.filter(employee=>employee.skills.includes(skill))
+function getEmployeesWithMultipleProjects() {
+    const result = company.employees.filter(emp => emp.projects.length >= 2);
+    return result; 
 }
-console.log(getEmployeesWithSkill("JavaScript"))
+console.log(getEmployeesWithMultipleProjects());
